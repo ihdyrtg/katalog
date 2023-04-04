@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Created by          : Waris Agung Widodo (ido.alit@gmail.com)
  * @Date                : 2020-01-03 08:49
@@ -12,10 +13,10 @@ if (isset($_GET['select_lang'])) {
     $select_lang = trim(strip_tags($_GET['select_lang']));
     // delete previous language cookie
     if (isset($_COOKIE['select_lang'])) {
-        @setcookie('select_lang', $select_lang, time()-14400, SWB);
+        @setcookie('select_lang', $select_lang, time() - 14400, SWB);
     }
     // create language cookie
-    @setcookie('select_lang', $select_lang, time()+14400, SWB);
+    @setcookie('select_lang', $select_lang, time() + 14400, SWB);
     $sysconf['default_lang'] = $select_lang;
 } else if (isset($_COOKIE['select_lang'])) {
     $sysconf['default_lang'] = trim(strip_tags($_COOKIE['select_lang']));
@@ -26,30 +27,28 @@ if (isset($_GET['select_lang'])) {
 <div class="flex h-screen w-full" id="visitor-counter" style="background: rgba(0,0,0,0.3)">
     <div class="bg-white w-full md:w-1/3 px-8 pt-8 pb-3 flex flex-col justify-between">
         <div>
-            <h3 class="font-light mb-2"><?= __('Welcome to ').$sysconf['library_name']; ?></h3>
+            <h3 class="font-light mb-2"><?= __('Welcome to ') . $sysconf['library_name']; ?></h3>
             <p class="lead">
-                <?= __('Please fill your member ID or name.')?>
+                <?= __('Please fill your member ID or name.') ?>
             </p>
 
             <div v-if="textInfo !== ''" class="rounded p-2 mt-4 bg-blue-lighter text-blue-darker md:hidden">{{textInfo}}</div>
 
             <form class="mt-4" @submit.prevent="onSubmit">
                 <div class="form-group">
-                    <label for="exampleInputEmail1"><?= __('Member ID')?></label>
-                    <input v-model="memberId" ref="memberId" autofocus type="text" class="form-control" id="exampleInputEmail1"
-                           aria-describedby="emailHelp" placeholder="<?= __('Enter your member ID')?>">
+                    <label for="exampleInputEmail1"><?= __('Member ID') ?></label>
+                    <input v-model="memberId" ref="memberId" autofocus type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="<?= __('Enter your member ID') ?>">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputPassword1"><?= __('Institution')?></label>
-                    <input v-model="institution" type="text" class="form-control" id="exampleInputPassword1"
-                           placeholder="<?= __('Enter your institution')?>">
-                    <small id="emailHelp" class="form-text text-muted"><?= __('Enough fill your member ID if you are member of ').$sysconf['library_name']; ?></small>
+                    <label for="exampleInputPassword1"><?= __('Institution') ?></label>
+                    <input v-model="institution" type="text" class="form-control" id="exampleInputPassword1" placeholder="<?= __('Enter your institution') ?>">
+                    <small id="emailHelp" class="form-text text-muted"><?= __('Enough fill your member ID if you are member of ') . $sysconf['library_name']; ?></small>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block"><?= __('Check In')?></button>
+                <button type="submit" class="btn btn-primary btn-block"><?= __('Check In') ?></button>
             </form>
         </div>
         <div class="text-right">
-            <small class="text-grey-dark"><?= __('Powered by ')?> <code>SLiMS</code></small>
+            <small class="text-grey-dark"><?= __('Powered by ') ?> <code>SLiMS</code></small>
         </div>
     </div>
     <div class="flex-1 hidden md:block">
@@ -75,7 +74,7 @@ if (isset($_GET['select_lang'])) {
     </div>
 </div>
 
-<script src="<?php echo $sysconf['template']['dir'].'/'.$sysconf['template']['theme'].'/assets/js/axios.min.js'; ?>"></script>
+<script src="<?php echo $sysconf['template']['dir'] . '/' . $sysconf['template']['theme'] . '/assets/js/axios.min.js'; ?>"></script>
 <script>
     new Vue({
         el: '#visitor-counter',
@@ -124,11 +123,13 @@ if (isset($_GET['select_lang'])) {
                 data.append('counter', 1)
 
                 axios({
-                    url: url,
-                    method: 'post',
-                    data: data,
-                    headers: {'Content-Type': 'multipart/form-data' }
-                })
+                        url: url,
+                        method: 'post',
+                        data: data,
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
                     .then(res => {
                         this.textInfo = res.data
                         this.image = `./images/persons/${this.memberId}.jpg`
@@ -147,7 +148,7 @@ if (isset($_GET['select_lang'])) {
                         }, 5000)
                     })
             },
-            resetForm: function () {
+            resetForm: function() {
                 this.memberId = ''
                 this.institution = ''
                 this.$refs.memberId.focus()
